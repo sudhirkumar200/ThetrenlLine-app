@@ -8,7 +8,7 @@ const Cards = () => {
             <div className='shadow-xl border my-4 h-[350px] bg-gray-300 hover:scale-105 duration-[400ms]'>2 Div</div>
             <div className='shadow-xl border my-4 h-[350px] bg-gray-400 hover:scale-105 duration-[400ms]'>3 Div</div>
         </div>
-      
+        <hr className='shadow'/>
     </div>
   )
 }

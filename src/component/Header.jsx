@@ -5,9 +5,10 @@ const Header = () => {
     const [toggle,setToggle] = useState(false);
   return (
     <>
-    <div className='bg-slate-300  p-2 '>
+    <div className='bg-white  px-0 padding '>
+        <div className='px-1 m-1  rounded '>
         <div className='max-w-[1240px] py-[10px] mx-auto items-center flex justify-between'>
-            <div className='text-3xl font-bold hover:scale-110 duration-[400ms]'>
+            <div className='px-0 text-3xl font-bold hover:scale-110 duration-[400ms]'>
                TheTrendLine
             </div>
             {
@@ -51,6 +52,8 @@ const Header = () => {
                 </li>
             </ul>
         </div>      
+    </div>
+    <hr className='shadow'/>
     </div>
     </>
   )
