@@ -2,19 +2,22 @@ import React from 'react'
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import Header from './Header';
 
 const navigation = [
   { name: 'Product', href: '#' },
   { name: 'Features', href: '#' },
   { name: 'Marketplace', href: '#' },
   { name: 'Company', href: '#' },
-]
+];
 
-export default function HeroPage() => {
+
+const HeroPage() => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <>
+    <Header/>
         <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -160,3 +163,5 @@ export default function HeroPage() => {
     </>
   )
 }
+ 
+export default HeroPage;

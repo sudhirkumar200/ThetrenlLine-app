@@ -1,8 +1,11 @@
 import React from 'react'
 import Typed from 'react-typed';
+import Header from './Header';
 
 const Banner = () => {
   return (
+    <>
+    
     <div className= ' px-0 bg-white w-full  py-[50px] '>
         <div className=' p-2' >
         <div className='max-w-[1240px] mx-auto text-center font-bold'>
@@ -24,6 +27,7 @@ const Banner = () => {
     </div>
     <hr className='shadow'/>
     </div>
+    </>
   )
 }
 
