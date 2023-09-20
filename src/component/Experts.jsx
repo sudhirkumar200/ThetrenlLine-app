@@ -5,7 +5,7 @@ const Experts = () => {
   return (
     <div className="w-full bg-white py-16 px-0">
       <div className="max-w-[1240px] mx-auto grid md:grid-cols-2">
-        <img className="w-[500px] mx-auto my-4" src={Laptop} alt="/" />
+        <img className="hover:scale-110 duration-[400ms] w-[500px] mx-auto my-4" src={Laptop} alt="/" />
         <div className="flex flex-col justify-center">
           <p className="text-[#00df9a] font-bold">LEARN FROM EXPERTS</p>
           <p>
