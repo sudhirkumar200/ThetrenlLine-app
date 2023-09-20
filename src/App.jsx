@@ -6,6 +6,8 @@ import Cards from "./component/Cards";
 import { BrowserRouter,Route,Routes } from "react-router-dom";
 import Home from './component/Home';
 import HeroPage from "./component/HeroPage";
+import UserRegister from './component/UserRegister'
+import Login from './component/Login';
 
 const App = () => {
   return (
@@ -16,7 +18,9 @@ const App = () => {
          <Route element={<Home/>} path="/" />
          <Route element={<News/>} path="/news" />
          <Route element={<Experts/>} path="/experts" />
-         <Route element={<HeroPage/>} path="/hero" />     
+         <Route element={<HeroPage/>} path="/hero" /> 
+         <Route element={<UserRegister/>} path="/register" /> 
+         <Route element={<Login/>} path="/login"/>  
         </Routes>
         {/* <Router>
           <Link to ="">Home</Link>
