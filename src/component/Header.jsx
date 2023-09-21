@@ -38,7 +38,7 @@ const Header = () => {
               <div className="hover:scale-110 duration-[400ms]">
                 <NavLink
                   className="border border-black bg-blue-100 rounded p-1"
-                  to="/register"
+                  to="/signup"
                 >
                   Get Started
                 </NavLink>

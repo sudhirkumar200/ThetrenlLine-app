@@ -15,6 +15,9 @@ const App = () => {
       <div className="px-16">
         <BrowserRouter>
         <Routes>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/signup" element={<UserRegister/>}/>
+        <Route path="/home" element={<Home/>}/>         
          <Route element={<Home/>} path="/" />
          <Route element={<News/>} path="/news" />
          <Route element={<Experts/>} path="/experts" />

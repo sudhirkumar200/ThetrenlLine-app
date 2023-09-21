@@ -1,7 +1,45 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react"
+import axios from "axios"
+import { useNavigate, Link } from "react-router-dom"
+
 
 export default function Login() {
+
+  const history=useNavigate();
+
+  const [email,setEmail]=useState('')
+  const [password,setPassword]=useState('')
+
+  async function submit(e){
+      e.preventDefault();
+
+      try{
+
+          await axios.post("http://localhost:8000/login",{
+              email,password
+          })
+          .then(res=>{
+              if(res.data=="exist"){
+                  history("/home",{state:{id:email}})
+              }
+              else if(res.data=="notexist"){
+                  alert("User have not sign up")
+              }
+          })
+          .catch(e=>{
+              alert("wrong details")
+              console.log(e);
+          })
+
+      }
+      catch(e){
+          console.log(e);
+
+      }
+
+  }
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -12,7 +50,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" action="/login" method="POST" onSubmit={submit}>
             <div>
               <label
                 htmlFor="email"
@@ -28,6 +66,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
+                  onChange={(e)=>setEmail(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -58,6 +97,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  onChange={(e)=>setPassword(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -75,7 +115,7 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
-            <NavLink to="/register" className='text-blue-700'>Get Started</NavLink>
+            <NavLink to="/signup" className='text-blue-700'>Get Started</NavLink>
           </p>
         </div>
       </div>
