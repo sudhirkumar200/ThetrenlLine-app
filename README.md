@@ -4,6 +4,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+## Add variables
+DB_URL= 
+SECRECT = 
+SECRECT_KEY=
+Salt = 
+EMAIL = 
+PASSWORD=
+PORT=4002
+
+For Password Generate Visit
+https://myaccount.google.com/apppasswords
+
 In the project directory, you can run:
 
 ### `npm start` to start Frontend
