@@ -33,7 +33,7 @@ const Header = () => {
                 <NavLink to="/news">News</NavLink>
               </div>
               <div className="hover:scale-110 duration-[400ms]">
-                <NavLink to="/experts">Experts</NavLink>
+                <NavLink to="/register">Register</NavLink>
               </div>
               <div className="hover:scale-110 duration-[400ms]">
                 <NavLink

@@ -9,8 +9,7 @@ import Footer from './Footer';
 const Home = () => {
   return (
     <>
-     <div className="md:px-16 p-0"> 
-        <Header/>       
+     <div className="md:px-16 p-0">       
         <Banner/>
         <Experts/>
         <News/>

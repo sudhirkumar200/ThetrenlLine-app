@@ -3,13 +3,16 @@ import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
 
 const navigation = [
-  { name: "Product", href: "#" },
-  { name: "Features", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Company", href: "#" },
+  { name: "Product", path: "/product" },
+  { name: "Features", path: "/features" },
+  { name: "Marketplace", path: "/marketplace" },
+  { name: "Company", path: "/company" },
 ];
+
 
 export default function HeroPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

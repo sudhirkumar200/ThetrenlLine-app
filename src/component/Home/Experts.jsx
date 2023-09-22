@@ -1,7 +1,6 @@
 import React from "react";
-import Laptop from "../assets/img/project.jpg";
+import Laptop from "../../assets/img/project.jpg";
 import { NavLink } from "react-router-dom";
-import Header from "./Header";
 
 const Experts = () => {
   return (

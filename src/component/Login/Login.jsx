@@ -16,14 +16,14 @@ export default function Login() {
 
       try{
 
-          await axios.post("http://localhost:8000/login",{
+          await axios.post("http://localhost:8000/user/login",{
               email,password
           })
           .then(res=>{
-              if(res.data=="exist"){
+              if(res.data==="exist"){
                   history("/home",{state:{id:email}})
               }
-              else if(res.data=="notexist"){
+              else if(res.data==="notexist"){
                   alert("User have not sign up")
               }
           })
@@ -81,12 +81,11 @@ export default function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
-                    href="#"
+                  <p                 
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
-                    Forgot password?
-                  </a>
+                    Forgot password?</p>
+                  
                 </div>
               </div>
               <div className="mt-2">
