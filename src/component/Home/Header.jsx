@@ -160,7 +160,7 @@ const Header = () => {
                 </div>
                 <div className="hover:scale-110 duration-[400ms]">
                   <NavLink
-                    to="/about"
+                    to="/signup"
                     className="block px-4 py-2 text-lg text-blue-800 hover:bg-blue-100"
                   >
                     Get Started

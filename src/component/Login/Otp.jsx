@@ -30,7 +30,7 @@ const Otp = () => {
         localStorage.setItem("userdbtoken", response.data.userToken);
         toast.success(response.data.message);
         setTimeout(() => {
-          navigate("/")
+          navigate("/home")
         }, 5000)
       } else {
         toast.error(response.response.data.error)

@@ -1,44 +1,48 @@
 import { NavLink } from "react-router-dom";
-import React, { useEffect, useState } from "react"
-import axios from "axios"
-import { useNavigate, Link } from "react-router-dom"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { userVerify } from "../Apis/Apis"; // Import your userVerify function
 
+const Login = () => {
+  const [passhow, setPassShow] = useState(false);
 
-export default function Login() {
+  const [inputdata, setInputdata] = useState({
+    email: "",
+    password: "",
+  });
 
-  const history=useNavigate();
+  const navigate = useNavigate();
 
-  const [email,setEmail]=useState('')
-  const [password,setPassword]=useState('')
+  // setinputvalue
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputdata({ ...inputdata, [name]: value });
+  };
+  // login data
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = inputdata;
 
-  async function submit(e){
-      e.preventDefault();
+    if (email === "") {
+      toast.error("Enter Your Email");
+    } else if (!email.includes("@")) {
+      toast.error("Enter Valid Email");
+    } else if (password === "") {
+      toast.error("Enter Your Password");
+    } else if (password.length < 6) {
+      toast.error("password length minimum 6 character");
+    } else {
+      const response = await userVerify(inputdata);
 
-      try{
-
-          await axios.post("http://localhost:8000/user/login",{
-              email,password
-          })
-          .then(res=>{
-              if(res.data==="exist"){
-                  history("/home",{state:{id:email}})
-              }
-              else if(res.data==="notexist"){
-                  alert("User have not sign up")
-              }
-          })
-          .catch(e=>{
-              alert("wrong details")
-              console.log(e);
-          })
-
+      if (response.status === 200) {
+        setInputdata({ ...inputdata, email: "", password: "" });
+        navigate("/");
+      } else {
+        toast.error(response.response.data.error);
       }
-      catch(e){
-          console.log(e);
-
-      }
-
-  }
+    }
+  };
 
   return (
     <>
@@ -50,7 +54,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="/login" method="POST" onSubmit={submit}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -61,12 +65,12 @@ export default function Login() {
               <div className="mt-2">
                 <input
                   placeholder="Enter your registered Email"
-                  id="email"
-                  name="email"
                   type="email"
+                  name="email"
+                  id=""
+                  onChange={handleChange}
                   autoComplete="email"
                   required
-                  onChange={(e)=>setEmail(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -81,22 +85,21 @@ export default function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <p                 
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?</p>
-                  
+                  <p className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <NavLink to="/sendotp">Forgot password?</NavLink>{" "}
+                  </p>
                 </div>
               </div>
               <div className="mt-2">
                 <input
-                   placeholder="Enter your Password"
-                  id="password"
+                  placeholder="Enter your Password"
+                  input
+                  type={!passhow ? "password" : "text"}
                   name="password"
-                  type="password"
+                  id=""
+                  onChange={handleChange}
                   autoComplete="current-password"
                   required
-                  onChange={(e)=>setPassword(e.target.value)}
                   className="block w-full rounded-md border-0 py-1.5 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -105,6 +108,7 @@ export default function Login() {
             <div>
               <button
                 type="submit"
+                onClick={handleSubmit}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
@@ -114,10 +118,14 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
-            <NavLink to="/signup" className='text-blue-700'>Get Started</NavLink>
+            <NavLink to="/signup" className="text-blue-700">
+              Get Started
+            </NavLink>
           </p>
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Login;

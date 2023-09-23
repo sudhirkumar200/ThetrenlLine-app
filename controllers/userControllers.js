@@ -2,8 +2,10 @@ const users = require("../models/userSchema");
 //const userotp = require("../models/userOtp");
 const nodemailer = require("nodemailer");
 const userotp = require("../models/userOtp"); // Correct import path
-
-
+//const SECRECT_KEY = "";
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // email config
 const tarnsporter = nodemailer.createTransport({
@@ -33,7 +35,30 @@ exports.userregister = async (req, res) => {
             });
 
             // here password hasing
+            
+// // hash password
+// userSchema.pre("save", async function (next) {
+//     if (this.isModified("password")) {
+//         this.password = await bcrypt.hash(this.password, 12);
+//     }
 
+//     next();
+// });
+
+// // token generate
+// userSchema.methods.generateAuthtoken = async function(){
+//     try {
+//         let newtoken = jwt.sign({_id:this._id},SECRECT_KEY,{
+//             expiresIn:"1d"
+//         });
+
+//         this.tokens = this.tokens.concat({token:newtoken});
+//         await this.save();
+//         return newtoken;
+//     } catch (error) {
+//         res.status(400).json(error)
+//     }
+// }
             const storeData = await userregister.save();
             res.status(200).json(storeData);
         }
@@ -120,7 +145,9 @@ exports.userOtpSend = async (req, res) => {
     }
 };
 
-exports.userLogin = async (req, res) => {
+//User login with otp
+
+exports.userLoginOtp = async (req, res) => {
     const { email, otp } = req.body;
 
     if (!otp || !email) {
@@ -154,30 +181,75 @@ exports.userLogin = async (req, res) => {
     }
 };
 
+//user login with Email and password
 
+// exports.usersignin = async(req,res)=>{
+//     const { email, password } = req.body;
 
-// exports.userLogin = async(req,res)=>{
-//     const {email,otp} = req.body;
+//   if (!password || !email) {
+//     return res.status(400).json({ error: "Please Enter Your Password and email" });
+//   }
 
-//     if(!otp || !email){
-//         res.status(400).json({ error: "Please Enter Your OTP and email" })
+//   try {
+//     // Find the user by email
+//     const user = await users.findOne({ email });
+
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found." });
 //     }
 
-//     try {
-//         const otpverification = await userotp.findOne({email:email});
+//     // Compare the provided password with the stored hashed password
+//     const passwordMatch = await bcrypt.compare(password, user.password);
 
-//         if(otpverification.otp === otp){
-//             const preuser = await users.findOne({email:email});
-
-//             // token generate
-//             const token = await preuser.generateAuthtoken();
-//             console.log(token);
-//            res.status(200).json({message:"User Login Succesfully Done",userToken:token});
-
-//         }else{
-//             res.status(400).json({error:"Invalid Otp"})
-//         }
-//     } catch (error) {
-//         res.status(400).json({ error: "Invalid Details", error })
+//     if (!passwordMatch) {
+//       return res.status(401).json({ error: "Incorrect password." });
 //     }
+//     console.log(user);
+
+//     // Passwords match, user is authenticated
+//     res.status(200).json({ message: "Login successful." });
+//   } catch (error) {
+//     res.status(500).json({ error: "Server error" });
+//   }
 // }
+
+
+
+exports.userLogin = async (req, res) => {
+    const { email, password } = req.body;
+  
+    if (!password || !email) {
+      return res.status(400).json({ error: "Please Enter Your Password and email" });
+    }
+  
+    try {
+      // Find the user by email
+      const user = await users.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found." });
+      }
+  
+      // Compare the provided password with the stored hashed password
+      const passwordMatch = await bcrypt.compare(password, user.password);
+  
+      if (!passwordMatch) {
+        return res.status(401).json({ error: "Incorrect password." });
+      }
+  
+      // Passwords match, user is authenticated
+      // You can generate and send an authentication token here if needed
+  
+      // Example: Generate a JWT token and send it in the response
+      const token = jwt.sign({ _id: user._id }, process.env.SECRECT_KEY, {
+        expiresIn: "1d",
+      });
+  
+      // You may also store this token in the user document for future authentication
+  
+      res.status(200).json({ message: "Login successful.", userToken: token });
+    } catch (error) {
+        console.error("Error:", error);
+      res.status(500).json({ error: "Server error" });
+    }
+  };
